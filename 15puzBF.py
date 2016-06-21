@@ -45,6 +45,8 @@ def solvable(row):
     if ( (row.index(0) in range(4, 8)) | (row.index(0) in range(12, 16)) ):
         m = 2
 
+    row.remove(0)
+
     for i in range(1, 16):
         temp   = 0
         result = inv(row, i, temp)
