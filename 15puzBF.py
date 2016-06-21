@@ -21,11 +21,8 @@ def ran_entries(row):
             print("Error: all integers in [0,15] must be present. You forgot to enter", i, ".\n")
             sys.exit(2)
 
-COUNT = 0
-
-def inv(row,x):
+def inv(row,x,COUNT):
     while ( row.index(x) + 1 != x ):
-        global COUNT
         if ( row.index(x) + 1 - x >  0 ):            
             pos  = row.index(x)
             posM = row.index(x) - 1
@@ -36,6 +33,27 @@ def inv(row,x):
             posP = row.index(x) + 1
             row[posP], row[pos] = row[pos], row[posP]
             COUNT += 1
+
+# https://www.cs.bham.ac.uk/~mdr/teaching/modules04/java2/TilesSolvability.html
+# https://en.wikipedia.org/wiki/15_puzzle#Solvability
+def solvable(row):
+    m = 0
+    COUNT = 0
+    if ( (row.index(0) in range(0, 4)) | (row.index(0) in range(8, 12)) ):
+        m = 1
+    if ( (row.index(0) in range(4, 8)) | (row.index(0) in range(12, 16)) ):
+        m = 2
+
+    for i in range(1, 16):
+        inv(row, i, COUNT)
+	
+    if ( ((COUNT % 2 == 0) & (m == 2)) | ((COUNT % 2 != 0) & (m == 1)) ):
+        print("Good! The puzzle is solvable!\n")
+    else:
+        print("Sorry, the puzzle is not solvable.\n")
+        print(m)
+        print(COUNT)
+        sys.exit(3)
 
 # https://www.cs.bham.ac.uk/~mdr/teaching/modules04/java2/TilesSolvability.html
 # https://en.wikipedia.org/wiki/15_puzzle#Solvability
